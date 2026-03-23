@@ -55,7 +55,7 @@ export default function App() {
   };
 
   const handleAnswer = (questionId: string, value: number) => {
-    setAnswers(prev => ({ ...prev, [questionId]: value }));
+    setAnswers((prev: Record<string, number>) => ({ ...prev, [questionId]: value }));
   };
 
   const isCategoryComplete = () => {
@@ -72,7 +72,7 @@ export default function App() {
     
     setError(null);
     if (currentCategoryIndex < SURVEY_CATEGORIES.length - 1) {
-      setCurrentCategoryIndex(prev => prev + 1);
+      setCurrentCategoryIndex((prev: number) => prev + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       submitSurvey();
@@ -82,7 +82,7 @@ export default function App() {
   const prevStep = () => {
     setError(null);
     if (currentCategoryIndex > 0) {
-      setCurrentCategoryIndex(prev => prev - 1);
+      setCurrentCategoryIndex((prev: number) => prev - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -220,7 +220,7 @@ export default function App() {
                     <input 
                       type="text" 
                       value={teamName}
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setTeamName(e.target.value);
                         if (error) setError(null);
                       }}
@@ -238,7 +238,7 @@ export default function App() {
                     <input 
                       type="text" 
                       value={respondentName}
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setRespondentName(e.target.value);
                         if (error) setError(null);
                       }}
@@ -474,7 +474,7 @@ export default function App() {
                     <p className="text-gray-400 font-medium">No data points collected yet.</p>
                   </div>
                 ) : (
-                  history.map((item) => (
+                  history.map((item: SurveyResponse) => (
                     <div key={item.id} className="bg-white p-6 rounded-3xl border border-black/5 shadow-sm hover:shadow-md transition-shadow space-y-4">
                       <div className="flex justify-between items-start">
                         <div>

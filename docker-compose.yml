@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Backend Service (Java Spring Boot)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:./data/maturity_survey
+    volumes:
+      - backend-data:/app/data
+
+  # Frontend Service (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api
+    ports:
+      - "80:8080"
+    environment:
+      - PORT=8080
+      - BACKEND_URL=http://backend:8080
+    depends_on:
+      - backend
+
+volumes:
+  backend-data:
